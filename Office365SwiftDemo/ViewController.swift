@@ -19,17 +19,16 @@ struct Note {
     var userRole: String
     
     init?(json: [String:Any]?) {
-        guard let results = json?["results"] as? [Any],
-            let first = results[0] as? [String:Any],
-            let displayName = first["displayName"] as! String?,
-            let id = first["id"] as! String?,
-            let links = first["links"] as? [String:Any]?,
+        print("json : ", json ?? "default value")
+        guard let displayName = json?["displayName"] as! String?,
+            let id = json?["id"] as! String?,
+            let links = json?["links"] as? [String:Any]?,
             let oneNoteClientUrlDic = links?["oneNoteClientUrl"] as? [String:Any]?,
             let oneNoteClientUrl = oneNoteClientUrlDic?["href"] as? String,
             let oneNoteWebUrlDic = links?["oneNoteWebUrl"] as? [String:Any]?,
             let oneNoteWebUrl = oneNoteWebUrlDic?["href"] as? String,
-            let own = first["self"] as! String?,
-            let userRole = first["userRole"] as! String? else {
+            let own = json?["self"] as! String?,
+            let userRole = json?["userRole"] as! String? else {
                 return nil
         }
         self.displayName = displayName
@@ -43,7 +42,7 @@ struct Note {
 
 class ViewController: UIViewController {
     
-    let kClientID = ""
+    let kClientID = "eead42ea-0f4a-4f7d-b03a-145c69f11c5f"
     let kAuthority = "https://login.microsoftonline.com/common"
     
     // Additional variables for Auth and Graph API
@@ -99,9 +98,12 @@ class ViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "goToHome") {
             // pass data to next view
-            let homeVc:HomeViewController = segue.destination as! HomeViewController
-            //let indexPath = self.tableView.indexPathForSelectedRow()
-            homeVc.noteBookURI = self.myNotes[0].own
+            if myNotes.count>0{
+                let homeVc:HomeViewController = segue.destination as! HomeViewController
+                //let indexPath = self.tableView.indexPathForSelectedRow()
+                let first : Note = myNotes[0]
+                homeVc.noteBookURI = first.oneNoteWebUrl
+            }
         }
     }
     
@@ -239,16 +241,24 @@ extension ViewController {
                 return
             }
             
-            guard let result = try? JSONSerialization.jsonObject(with: data!, options: []) as? NSDictionary else {
+            guard let json = try? JSONSerialization.jsonObject(with: data!, options: []) as? NSDictionary else {
                 
                 self.updateLogging(text: "Couldn't deserialize result JSON")
                 return
             }
-            print("result", result?["value"] ?? "default value")
-            self.myNotes = result?["value"] as? [Note] ?? []
-            //self.myNotes = result.value
-            //self.updateLogging(text: "Result from Graph: \(result))")
-            //self.performSegue(withIdentifier: "goToHome", sender: self)
+            guard let dictionary = json as? [String: Any] else {
+                return
+            }
+            guard let valueArr = dictionary["value"] as? [[String: Any]] else {
+                return
+            }
+            for n in 0...valueArr.count-1 {
+                let item : Note = Note.init(json: valueArr[n])!
+                self.myNotes.append(item)
+            }
+            DispatchQueue.main.async {
+                self.performSegue(withIdentifier: "goToHome", sender: self)
+            }
             
             }.resume()
     }
@@ -304,48 +314,6 @@ extension ViewController {
 
 // MARK: UI Helpers
 extension ViewController {
-    
-    func initUI() {
-        // Add call Graph button
-        callGraphButton  = UIButton()
-        callGraphButton.translatesAutoresizingMaskIntoConstraints = false
-        callGraphButton.setTitle("Call Microsoft Graph API", for: .normal)
-        callGraphButton.setTitleColor(.blue, for: .normal)
-        callGraphButton.addTarget(self, action: #selector(callGraphAPI(_:)), for: .touchUpInside)
-        self.view.addSubview(callGraphButton)
-        
-        callGraphButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        callGraphButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 50.0).isActive = true
-        callGraphButton.widthAnchor.constraint(equalToConstant: 300.0).isActive = true
-        callGraphButton.heightAnchor.constraint(equalToConstant: 50.0).isActive = true
-        
-        // Add sign out button
-        signOutButton = UIButton()
-        signOutButton.translatesAutoresizingMaskIntoConstraints = false
-        signOutButton.setTitle("Sign Out", for: .normal)
-        signOutButton.setTitleColor(.blue, for: .normal)
-        signOutButton.setTitleColor(.gray, for: .disabled)
-        signOutButton.addTarget(self, action: #selector(signOut(_:)), for: .touchUpInside)
-        self.view.addSubview(signOutButton)
-        
-        signOutButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        signOutButton.topAnchor.constraint(equalTo: callGraphButton.bottomAnchor, constant: 10.0).isActive = true
-        signOutButton.widthAnchor.constraint(equalToConstant: 150.0).isActive = true
-        signOutButton.heightAnchor.constraint(equalToConstant: 50.0).isActive = true
-        signOutButton.isEnabled = false
-        
-        // Add logging textfield
-        loggingText = UITextView()
-        loggingText.isUserInteractionEnabled = false
-        loggingText.translatesAutoresizingMaskIntoConstraints = false
-        
-        self.view.addSubview(loggingText)
-        
-        loggingText.topAnchor.constraint(equalTo: signOutButton.bottomAnchor, constant: 10.0).isActive = true
-        loggingText.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 10.0).isActive = true
-        loggingText.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: 10.0).isActive = true
-        loggingText.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 10.0).isActive = true
-    }
     
     func updateLogging(text : String) {
         

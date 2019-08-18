@@ -7,8 +7,13 @@
 //
 
 import UIKit
+import WebKit
 
 class HomeViewController: UIViewController {
+    
+    @IBOutlet weak var urilbl: UILabel!
+    
+    @IBOutlet weak var notePage: WKWebView!
     
     var noteBookURI: String = ""
 
@@ -17,6 +22,10 @@ class HomeViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         print("noteBookURI:", noteBookURI)
+        urilbl.text = noteBookURI
+        let url = URL(string: noteBookURI)
+        notePage.load(URLRequest(url: url!))
+
     }
     
 

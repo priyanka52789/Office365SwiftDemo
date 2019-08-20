@@ -43,7 +43,7 @@ class HomeViewController: UIViewController {
 extension HomeViewController : WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-        let credential = URLCredential(user: "psen@netwoven.com", password: "priy123!123", persistence: URLCredential.Persistence.forSession)
+        let credential = URLCredential(user: "", password: "", persistence: URLCredential.Persistence.forSession)
         //challenge.sender?.use(credential, for: challenge)
         //completionHandler(URLSession.AuthChallengeDisposition.useCredential, credential)
         completionHandler(.useCredential, credential)

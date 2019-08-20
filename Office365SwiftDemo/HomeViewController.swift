@@ -11,8 +11,6 @@ import WebKit
 
 class HomeViewController: UIViewController {
     
-    @IBOutlet weak var urilbl: UILabel!
-    
     @IBOutlet weak var notePage: WKWebView!
     
     var noteBook: Note?
@@ -21,9 +19,8 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        let urlStr = noteBook!.oneNoteWebUrl
+        guard let urlStr = noteBook?.oneNoteWebUrl else {return}
         print("noteBookURI:", urlStr)
-        urilbl.text = urlStr
         let url = URL(string: urlStr)
         notePage.load(URLRequest(url: url!))
         notePage.navigationDelegate = self
@@ -37,6 +34,23 @@ class HomeViewController: UIViewController {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
     }
+    
+    @IBAction func buttonOnClick(_ sender: Any) {
+        let btn = sender as! UIButton
+        switch(btn.tag) {
+        case 1:
+            performSegue(withIdentifier: "goToList", sender: self)
+        case 2:
+            performSegue(withIdentifier: "goToNotes", sender: self)
+        case 3:
+            performSegue(withIdentifier: "goToTasks", sender: self)
+        case 4:
+            performSegue(withIdentifier: "goToFiles", sender: self)
+        default:
+            performSegue(withIdentifier: "goToList", sender: self)
+        }
+    }
+    
     
 }
 

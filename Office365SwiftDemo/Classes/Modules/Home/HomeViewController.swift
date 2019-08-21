@@ -7,24 +7,14 @@
 //
 
 import UIKit
-import WebKit
 
 class HomeViewController: UIViewController {
     
-    @IBOutlet weak var notePage: WKWebView!
-    
-    var noteBook: Note?
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        guard let urlStr = noteBook?.oneNoteWebUrl else {return}
-        print("noteBookURI:", urlStr)
-        let url = URL(string: urlStr)
-        notePage.load(URLRequest(url: url!))
-        notePage.navigationDelegate = self
-        notePage.scrollView.bounces = false
+        
     }
     
     // MARK: - Navigation
@@ -35,6 +25,10 @@ class HomeViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     
+    
+    @IBAction func logoutOnClick(_ sender: Any) {
+        
+    }
     @IBAction func buttonOnClick(_ sender: Any) {
         let btn = sender as! UIButton
         switch(btn.tag) {
@@ -54,13 +48,3 @@ class HomeViewController: UIViewController {
     
 }
 
-extension HomeViewController : WKNavigationDelegate {
-    
-    func webView(_ webView: WKWebView, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-        let credential = URLCredential(user: "psen@netwoven.com", password: "priy123!123", persistence: URLCredential.Persistence.forSession)
-        //challenge.sender?.use(credential, for: challenge)
-        //completionHandler(URLSession.AuthChallengeDisposition.useCredential, credential)
-        completionHandler(.useCredential, credential)
-    }
-    
-}

@@ -66,14 +66,7 @@ class ViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if (segue.identifier == "goToHome") {
-            // pass data to next view
-            if myNotes.count>0{
-                let homeVc:HomeViewController = segue.destination as! HomeViewController
-                //let indexPath = self.tableView.indexPathForSelectedRow()
-                homeVc.noteBook = myNotes[0]
-            }
-        }
+        
     }
     
 }

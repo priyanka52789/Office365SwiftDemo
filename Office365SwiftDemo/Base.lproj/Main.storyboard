@@ -10,10 +10,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Home View Controller-->
+        <!--Page View Controller-->
         <scene sceneID="chu-oK-N1Y">
             <objects>
-                <viewController id="Dx2-SP-pie" customClass="HomeViewController" customModule="Office365SwiftDemo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Dx2-SP-pie" customClass="PageViewController" customModule="Office365SwiftDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jJf-Qe-0lV">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -85,7 +85,7 @@
                                     <constraint firstAttribute="width" constant="120" id="xit-Ee-bPl"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
-                                <state key="normal" title="List">
+                                <state key="normal" title="Notes">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
@@ -100,7 +100,7 @@
                                     <constraint firstAttribute="height" constant="50" id="MJz-Zh-pf3"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
-                                <state key="normal" title="List">
+                                <state key="normal" title="Tasks">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
@@ -115,11 +115,22 @@
                                     <constraint firstAttribute="height" constant="50" id="WDj-iJ-LmC"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
-                                <state key="normal" title="List">
+                                <state key="normal" title="Files">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
                                     <action selector="buttonOnClick:" destination="anA-Vd-5xj" eventType="touchUpInside" id="vfp-gu-usj"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tyf-lk-jcQ">
+                                <rect key="frame" x="295" y="84" width="60" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="lcb-rV-ZSZ"/>
+                                    <constraint firstAttribute="height" constant="40" id="viX-QF-481"/>
+                                </constraints>
+                                <state key="normal" title="Sign Out"/>
+                                <connections>
+                                    <action selector="logoutOnClick:" destination="anA-Vd-5xj" eventType="touchUpInside" id="n2W-Zv-Tre"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -128,6 +139,7 @@
                             <constraint firstItem="PkE-Zm-04u" firstAttribute="top" secondItem="Gb5-tC-FSv" secondAttribute="bottom" constant="12" id="0w4-Dk-LUU"/>
                             <constraint firstItem="75T-6G-8FS" firstAttribute="top" secondItem="8MG-tG-nsk" secondAttribute="bottom" constant="25" id="1PS-Dp-MLG"/>
                             <constraint firstItem="Gb5-tC-FSv" firstAttribute="top" secondItem="DW7-z2-TXz" secondAttribute="bottom" constant="26" id="GFt-Nd-tgl"/>
+                            <constraint firstItem="ovb-ic-Upl" firstAttribute="trailing" secondItem="Tyf-lk-jcQ" secondAttribute="trailing" constant="20" id="NI8-U9-Lkf"/>
                             <constraint firstAttribute="trailing" secondItem="PkE-Zm-04u" secondAttribute="trailing" id="ZnQ-s7-ZxE"/>
                             <constraint firstItem="8MG-tG-nsk" firstAttribute="centerX" secondItem="ovb-ic-Upl" secondAttribute="centerX" id="aT8-wv-zu6"/>
                             <constraint firstItem="8MG-tG-nsk" firstAttribute="top" secondItem="PkE-Zm-04u" secondAttribute="bottom" constant="12" id="cTY-8H-Iua"/>
@@ -138,6 +150,7 @@
                             <constraint firstItem="75T-6G-8FS" firstAttribute="centerX" secondItem="ovb-ic-Upl" secondAttribute="centerX" id="nZZ-xT-JbK"/>
                             <constraint firstItem="PkE-Zm-04u" firstAttribute="leading" secondItem="yZt-gZ-obx" secondAttribute="leading" id="pMl-Cx-45q"/>
                             <constraint firstItem="DW7-z2-TXz" firstAttribute="centerX" secondItem="ovb-ic-Upl" secondAttribute="centerX" id="pwT-MM-BoO"/>
+                            <constraint firstItem="Tyf-lk-jcQ" firstAttribute="top" secondItem="ovb-ic-Upl" secondAttribute="top" constant="20" id="z17-1c-RLi"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ovb-ic-Upl"/>
                     </view>
@@ -152,10 +165,10 @@
             </objects>
             <point key="canvasLocation" x="2141.5999999999999" y="490.70464767616198"/>
         </scene>
-        <!--View Controller-->
+        <!--List View Controller-->
         <scene sceneID="pbJ-dq-Qd5">
             <objects>
-                <viewController id="N9r-zo-HQH" sceneMemberID="viewController">
+                <viewController id="N9r-zo-HQH" customClass="ListViewController" customModule="Office365SwiftDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="H0T-15-5S9">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -191,7 +204,7 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="pTs-DU-OC0">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="pTs-DU-OC0">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="pTs-DU-OC0" id="8lN-qY-3It">
@@ -220,10 +233,10 @@
             </objects>
             <point key="canvasLocation" x="3350" y="-309"/>
         </scene>
-        <!--View Controller-->
+        <!--Tasks View Controller-->
         <scene sceneID="kSU-MZ-Bzi">
             <objects>
-                <viewController id="J5I-Nq-Tun" sceneMemberID="viewController">
+                <viewController id="J5I-Nq-Tun" customClass="TasksViewController" customModule="Office365SwiftDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="4ge-Un-oAA">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -235,10 +248,10 @@
             </objects>
             <point key="canvasLocation" x="3350" y="378"/>
         </scene>
-        <!--View Controller-->
+        <!--Files View Controller-->
         <scene sceneID="90D-Yv-pln">
             <objects>
-                <viewController id="n6U-wl-9DN" sceneMemberID="viewController">
+                <viewController id="n6U-wl-9DN" customClass="FilesViewController" customModule="Office365SwiftDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jEl-Tt-a3V">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

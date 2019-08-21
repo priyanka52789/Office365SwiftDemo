@@ -1,14 +1,14 @@
 //
-//  PageViewController.swift
+//  ListViewController.swift
 //  Office365SwiftDemo
 //
-//  Created by Niraj Tenany on 20/08/19.
+//  Created by Niraj Tenany on 21/08/19.
 //  Copyright © 2019 Priyanka Sen. All rights reserved.
 //
 
 import UIKit
 
-class PageViewController: UIViewController {
+class ListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
